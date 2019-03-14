@@ -11,10 +11,9 @@ AddressBook.prototype.addContact = function(contact) {
 
 
 // Business logic for contacts
-function Contact(firstName, lastName, phoneNumber) {
+function Contact(firstName, lastName) {
   this.firstName = firstName;
   this.lastName = lastName;
-  this.phoneNumber = phoneNumber;
   this.addresses = [];
 }
 
@@ -23,20 +22,44 @@ Contact.prototype.fullName = function() {
 }
 
 // Business logic for addresses
-function Address(street, city, state) {
+function Address(addType, street, city, state) {
+  this.addType = addType;
   this.street = street;
   this.city = city;
   this.state = state;
 }
 
 Address.prototype.fullAddress = function() {
-  return this.street + ", " + this.city + " " + this.state;
+  return this.addType + ": " + this.street + ", " + this.city + " " + this.state;
+}
+
+// Business logic for form fields
+function resetFields() {
+    $("input#new-first-name").val("");
+    $("input#new-last-name").val("");
+    $("input.new-street").val("");
+    $("input.new-city").val("");
+    $("input.new-state").val("");
 }
 
 
 $(document).ready(function(){
   $("#add-address").click(function() {
     $("#new-addresses").append('<div class="new-address">' +
+                                  '<div class="form-group">' +
+                                  '<div class="radio">' +
+                                  '<label>' +
+                                    '<input type="radio" name="addType" value="home" checked>' +
+                                    'Home' +
+                                  '</label>' +
+                                  '</div>' +
+                                  '<div class="form-group">' +
+                                  '<div class="radio">' +
+                                  '<label>' +
+                                    '<input type="radio" name="addType" value="work">' +
+                                    'Work' +
+                                  '</label>' +
+                                  '</div>' +
                                  '<div class="form-group">' +
                                    '<label for="new-street">Street</label>' +
                                    '<input type="text" class="form-control new-street">' +
@@ -60,10 +83,11 @@ $(document).ready(function(){
     var newContact = new Contact(inputtedFirstName, inputtedLastName);
 
     $(".new-address").each(function() {
+      var inputtedType = $(this).find('input:radio[name=addType]:checked').val();
       var inputtedStreet = $(this).find("input.new-street").val();
       var inputtedCity = $(this).find("input.new-city").val();
       var inputtedState = $(this).find("input.new-state").val();
-      var newAddress = new Address(inputtedStreet, inputtedCity, inputtedState)
+      var newAddress = new Address(inputtedType, inputtedStreet, inputtedCity, inputtedState)
       newContact.addresses.push(newAddress)
     });
 
@@ -80,11 +104,7 @@ $(document).ready(function(){
       });
     });
 
-    $("input#new-first-name").val("");
-    $("input#new-last-name").val("");
-    $("input.new-street").val("");
-    $("input.new-city").val("");
-    $("input.new-state").val("");
+    resetFields();
 
   });
 });
