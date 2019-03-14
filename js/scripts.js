@@ -47,35 +47,34 @@ function resetFields() {
 $(document).ready(function(){
   $("#add-address").click(function() {
     $("#new-addresses").append(
-    '<div class="new-address new-address-section">' +
-    '<div class="form-group">' +
-    '<select class="form-control" id="addType">' +
-    "<option>Home</option>" +
-    "<option>Work</option>" +
-    "</select>" +
-    "</div>" +
-    '<div class="form-group">' +
-    '<label for="new-street">Street</label>' +
-    '<input type="text" class="form-control new-street">' +
-    "</div>" +
-    '<div class="form-group">' +
-    '<label for="new-city">City</label>' +
-    '<input type="text" class="form-control new-city">' +
-    "</div>" +
-    '<div class="form-group">' +
-    '<label for="new-state">State</label>' +
-    '<input type="text" class="form-control new-state">' +
-    "</div>" +
-    "</div>"
-);
-
+      '<div class="new-address new-address-section">' +
+      '<div class="form-group">' +
+      '<select class="form-control" id="addType">' +
+      "<option>Home</option>" +
+      "<option>Work</option>" +
+      "</select>" +
+      "</div>" +
+      '<div class="form-group">' +
+      '<label for="new-street">Street</label>' +
+      '<input type="text" class="form-control new-street">' +
+      "</div>" +
+      '<div class="form-group">' +
+      '<label for="new-city">City</label>' +
+      '<input type="text" class="form-control new-city">' +
+      "</div>" +
+      '<div class="form-group">' +
+      '<label for="new-state">State</label>' +
+      '<input type="text" class="form-control new-state">' +
+      "</div>" +
+      "</div>"
+      );
   });
 
   $("form#new-contact").submit(function(event) {
     event.preventDefault();
 
-    var inputtedFirstName = $("input#new-first-name").val();
-    var inputtedLastName = $("input#new-last-name").val();
+    var inputtedFirstName = $("input#new-first-name").val().charAt(0).toUpperCase() + $("input#new-first-name").val().slice(1).toLowerCase();
+    var inputtedLastName = $("input#new-last-name").val().charAt(0).toUpperCase() + $("input#new-last-name").val().slice(1).toLowerCase();
     var newContact = new Contact(inputtedFirstName, inputtedLastName);
 
     $(".new-address").each(function() {
@@ -87,7 +86,13 @@ $(document).ready(function(){
       newContact.addresses.push(newAddress)
     });
 
-    $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>");
+    $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>").hide().fadeIn();
+
+    $("ul#contacts").hover(function(){
+      $(this).css("color", "#008080")
+    }, function(){
+      $(this).css("color", "black")
+    })
 
     $(".contact").last().click(function() {
       $("#show-contact").show();
