@@ -1,3 +1,7 @@
-#sub-btn {
+.btn {
   margin-bottom: 30px;
+}
+
+#addType {
+  max-width: 100px;
 }

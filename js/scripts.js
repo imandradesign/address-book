@@ -40,39 +40,35 @@ function resetFields() {
     $("input.new-street").val("");
     $("input.new-city").val("");
     $("input.new-state").val("");
+    $(".new-address-section").hide();
 }
 
 
 $(document).ready(function(){
   $("#add-address").click(function() {
-    $("#new-addresses").append('<div class="new-address">' +
-                                  '<div class="form-group">' +
-                                  '<div class="radio">' +
-                                  '<label>' +
-                                    '<input type="radio" name="addType" value="home" checked>' +
-                                    'Home' +
-                                  '</label>' +
-                                  '</div>' +
-                                  '<div class="form-group">' +
-                                  '<div class="radio">' +
-                                  '<label>' +
-                                    '<input type="radio" name="addType" value="work">' +
-                                    'Work' +
-                                  '</label>' +
-                                  '</div>' +
-                                 '<div class="form-group">' +
-                                   '<label for="new-street">Street</label>' +
-                                   '<input type="text" class="form-control new-street">' +
-                                 '</div>' +
-                                 '<div class="form-group">' +
-                                   '<label for="new-city">City</label>' +
-                                   '<input type="text" class="form-control new-city">' +
-                                 '</div>' +
-                                 '<div class="form-group">' +
-                                   '<label for="new-state">State</label>' +
-                                   '<input type="text" class="form-control new-state">' +
-                                 '</div>' +
-                               '</div>');
+    $("#new-addresses").append(
+    '<div class="new-address new-address-section">' +
+    '<div class="form-group">' +
+    '<select class="form-control" id="addType">' +
+    "<option>Home</option>" +
+    "<option>Work</option>" +
+    "</select>" +
+    "</div>" +
+    '<div class="form-group">' +
+    '<label for="new-street">Street</label>' +
+    '<input type="text" class="form-control new-street">' +
+    "</div>" +
+    '<div class="form-group">' +
+    '<label for="new-city">City</label>' +
+    '<input type="text" class="form-control new-city">' +
+    "</div>" +
+    '<div class="form-group">' +
+    '<label for="new-state">State</label>' +
+    '<input type="text" class="form-control new-state">' +
+    "</div>" +
+    "</div>"
+);
+
   });
 
   $("form#new-contact").submit(function(event) {
@@ -83,7 +79,7 @@ $(document).ready(function(){
     var newContact = new Contact(inputtedFirstName, inputtedLastName);
 
     $(".new-address").each(function() {
-      var inputtedType = $(this).find('input:radio[name=addType]:checked').val();
+      var inputtedType = $(this).find('#addType').val();
       var inputtedStreet = $(this).find("input.new-street").val();
       var inputtedCity = $(this).find("input.new-city").val();
       var inputtedState = $(this).find("input.new-state").val();
@@ -105,6 +101,5 @@ $(document).ready(function(){
     });
 
     resetFields();
-
   });
 });
